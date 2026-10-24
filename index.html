@@ -57,7 +57,7 @@ footer{text-align:center;color:#829ab1;padding:22px 16px 28px;font-size:12px}
 <section class="sheet active" id="Petunjuk">
 <h2 class="sheet-title">PANDUAN SINGKAT PENGGUNAAN SISTEM PERHITUNGAN HPP</h2>
 <div class="guide">
-<div class="guide-card"><strong>Mulai di sini:</strong> buka menu <b>Input</b>, isi identitas produksi, lalu masukkan biaya yang benar-benar digunakan. Bagian <b>Perhitungan</b> dan <b>Laporan HPP</b> akan diperbarui otomatis—Anda tidak perlu menghitung total secara manual.</div>
+<div class="guide-card"><strong>Mulai di sini:</strong> data contoh dari Excel sudah tersedia saat aplikasi dibuka. Buka menu <b>Input</b> untuk memeriksa atau mengganti identitas produksi dan biaya sesuai kebutuhan Anda. Bagian <b>Perhitungan</b> dan <b>Laporan HPP</b> akan diperbarui otomatis—Anda tidak perlu menghitung total secara manual.</div>
 <h3>1. Mengenal menu</h3>
 <ul>
 <li><b>Petunjuk:</b> panduan penggunaan sistem.</li>
@@ -75,7 +75,7 @@ footer{text-align:center;color:#829ab1;padding:22px 16px 28px;font-size:12px}
 <li>Periksa kembali nama, kuantitas, tarif, jumlah unit, dan klasifikasi BOP sebelum menggunakan hasil laporan.</li>
 </ol>
 <h3>3. Menambah atau menghapus baris input</h3>
-<p>Setiap tabel biaya dimulai dengan satu baris kosong agar tampilan tetap ringkas. Jika memiliki lebih dari satu komponen biaya, gunakan tombol tambah di bawah tabel terkait:</p>
+<p>Tabel biaya sudah terisi dengan data contoh Excel. Jika memiliki komponen tambahan, gunakan tombol tambah di bawah tabel terkait. Anda juga dapat menghapus baris yang tidak diperlukan:</p>
 <ul>
 <li><b>+ Tambah Bahan Baku</b> untuk menambahkan jenis bahan baku.</li>
 <li><b>+ Tambah Tenaga Kerja</b> untuk menambahkan kelompok tenaga kerja.</li>
@@ -115,20 +115,19 @@ footer{text-align:center;color:#829ab1;padding:22px 16px 28px;font-size:12px}
 <div class="tip"><b>Catatan:</b> tombol PDF membuka jendela cetak browser. File baru tersimpan setelah Anda memilih <b>Save as PDF</b> dan menekan <b>Simpan</b>.</div>
 <h3>8. Asumsi dan catatan</h3>
 <p>Sistem ini menggunakan asumsi satu perusahaan manufaktur dengan satu jenis produk dan seluruh produk selesai diproduksi pada periode berjalan, tanpa persediaan produk dalam proses awal maupun akhir. Hasil sangat bergantung pada ketepatan data yang dimasukkan. Status valid merupakan pemeriksaan dasar sistem, bukan pengganti pemeriksaan akuntansi secara menyeluruh.</p>
-<p>Nama perusahaan dan produk yang tampil sebagai contoh dapat diganti dengan data Anda. Gunakan data simulasi untuk latihan, atau data aktual yang sudah diperiksa untuk kebutuhan laporan.</p>
+<p>Nama perusahaan dan produk serta seluruh nominal biaya yang tampil merupakan data contoh dari workbook yang diberikan. Semua data dapat diganti pengguna; rumus perhitungan tetap sama. Perubahan input hanya memengaruhi sesi penggunaan saat ini dan tidak mengubah kode atau data awal website di GitHub.</p>
 </div></section>
 <section class="sheet" id="Input">
 <h2 class="sheet-title">SISTEM PERHITUNGAN HARGA POKOK PRODUKSI – INPUT DATA</h2>
 <div class="download-bar"><button class="download-btn" onclick="downloadPDF('input')">⬇ Download Data Input (PDF)</button><span>Unduh data input dalam format PDF.</span></div>
-<p class="subtitle">Isi kolom berwarna kuning sesuai data Anda. Semua kolom identitas sengaja dikosongkan saat aplikasi pertama kali dibuka. Kolom jumlah dan total biaya dihitung otomatis.</p>
-
+<p class="subtitle">Data contoh dari workbook Excel sudah dimuat sebagai data awal. Anda dapat mengubah identitas, kuantitas, tarif, klasifikasi, atau menambah/menghapus baris sesuai kebutuhan. Semua perhitungan dan laporan diperbarui otomatis.</p>
 <div class="section">A. IDENTITAS PERUSAHAAN, PERIODE, DAN JUMLAH PRODUKSI</div>
 <table><tbody>
-<tr><td>Nama Perusahaan</td><td><input id="company" value="" placeholder="Masukkan nama perusahaan"></td></tr>
-<tr><td>Nama Produk</td><td><input id="productName" value="" placeholder="Masukkan nama produk"></td></tr>
-<tr><td>Periode</td><td><input id="period" value="" placeholder="Contoh: Oktober 2026"></td></tr>
-<tr><td>Jumlah Unit Produksi</td><td><input id="units" class="number" type="number" min="0" step="any" value="" placeholder="Masukkan jumlah unit"></td></tr>
-<tr><td>Satuan Produk</td><td><input id="unitLabel" value="" placeholder="Contoh: buah, unit, pcs"></td></tr>
+<tr><td>Nama Perusahaan</td><td><input id="company" value="PT Kebab Nusantara (fiktif)" placeholder="Masukkan nama perusahaan"></td></tr>
+<tr><td>Nama Produk</td><td><input id="productName" value="Kebab Original" placeholder="Masukkan nama produk"></td></tr>
+<tr><td>Periode</td><td><input id="period" value="Oktober 2026" placeholder="Contoh: Oktober 2026"></td></tr>
+<tr><td>Jumlah Unit Produksi</td><td><input id="units" class="number" type="number" min="0" step="any" value="3000" placeholder="Masukkan jumlah unit"></td></tr>
+<tr><td>Satuan Produk</td><td><input id="unitLabel" value="buah" placeholder="Contoh: buah, unit, pcs"></td></tr>
 </tbody></table>
 <div class="section">B. BIAYA BAHAN BAKU LANGSUNG (BBB)</div>
 <table id="bbbTable"><thead><tr><th>No</th><th>Jenis Bahan Baku</th><th>Satuan</th><th class="num">Kuantitas</th><th class="num">Harga Satuan (Rp)</th><th class="num">Jumlah (Rp)</th><th>Aksi</th></tr></thead><tbody></tbody><tfoot><tr><td colspan="6" class="total">TOTAL BIAYA BAHAN BAKU LANGSUNG</td><td id="bbbTotal" class="num total">0</td></tr></tfoot></table><div class="add-row-wrap"><button type="button" class="add-row-btn" onclick="addRow('bbb')">＋ Tambah Bahan Baku</button></div>
@@ -162,9 +161,32 @@ footer{text-align:center;color:#829ab1;padding:22px 16px 28px;font-size:12px}
 </div>
 <footer>Sistem Perhitungan HPP · Tampilan HTML interaktif berdasarkan workbook yang diberikan</footer>
 <script>
-const initialBBB=[["","", "", ""]];
-const initialTKL=[["","", "", ""]];
-const initialBOP=[["","", ""]];
+// Data awal diambil dari sheet Input pada workbook HPP Isnan(2).xlsx.
+// Semua kolom input tetap dapat diedit; rumus perhitungan tetap dikendalikan JavaScript.
+const initialBBB=[
+ ['Daging sapi giling','kg',180,120000],
+ ['Tortilla kebab','lembar',3000,2500],
+ ['Sayuran (selada dan tomat)','kg',150,18000],
+ ['Saus dan mayones','liter',120,35000],
+ ['Keju','kg',60,95000],
+ ['Kertas pembungkus','lembar',3000,500]
+];
+const initialTKL=[
+ ['Persiapan bahan dan marinasi','jam',240,18000],
+ ['Memasak daging','jam',300,20000],
+ ['Perakitan kebab','jam',360,16000],
+ ['Pengemasan dan pemeriksaan','jam',180,15000]
+];
+const initialBOP=[
+ ['Bumbu dan bahan penolong','Variabel',1800000],
+ ['Gas LPG','Variabel',2200000],
+ ['Listrik produksi','Variabel',900000],
+ ['Kemasan tambahan dan tisu','Variabel',750000],
+ ['Penyusutan alat masak','Tetap',1200000],
+ ['Sewa tempat produksi','Tetap',3500000],
+ ['Gaji pengawas produksi','Tetap',2500000],
+ ['Perawatan peralatan','Tetap',600000]
+];
 const money=n=>new Intl.NumberFormat('id-ID',{maximumFractionDigits:0}).format(Number(n)||0);
 const num=v=>{let x=Number(v);return Number.isFinite(x)?x:0};
 function inp(value,cls='',type='text',attrs=''){return `<input value="${String(value??'').replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;')}" class="${cls}" type="${type}" ${attrs}>`}
@@ -242,6 +264,7 @@ function update(){
  document.getElementById('reportCheck1').textContent='Pemeriksaan: selisih total HPP = BOP tetap — '+(Math.abs((full-variable)-bopFixed)<0.005?'OK':'CEK');
  document.getElementById('reportCheck2').textContent='Pemeriksaan: total Full Costing = Perhitungan — '+(Math.abs(full-(bbb+tkl+bopVar+bopFixed))<0.005&&Math.abs(variable-(bbb+tkl+bopVar))<0.005?'OK':'CEK');
 }
+
 document.addEventListener('input',e=>{if(e.target.matches('input,select'))update()});
 document.addEventListener('change',e=>{if(e.target.matches('input,select'))update()});
 update();
