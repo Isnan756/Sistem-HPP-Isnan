@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistem HPP | Full Costing &amp; Variable Costing</title>
+<style>
+:root{--navy:#102a43;--navy-2:#183f5d;--blue:#eaf2f8;--teal:#087f8c;--teal-dark:#06616b;--green:#e4f5eb;--yellow:#fff8dc;--border:#d9e2ec;--text:#243b53;--muted:#627d98;--surface:#fff;--page:#f3f6fa;--danger:#b42318;--shadow:0 12px 32px rgba(16,42,67,.08)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--page);color:var(--text);font-family:Inter,"Segoe UI",Arial,sans-serif;font-size:14px;line-height:1.55}
+header{position:relative;overflow:hidden;background:linear-gradient(125deg,#102a43 0%,#183f5d 62%,#087f8c 100%);color:#fff;padding:34px max(24px,calc((100% - 1360px)/2));box-shadow:0 5px 20px rgba(16,42,67,.14)}
+header:after{content:"";position:absolute;width:320px;height:320px;border:1px solid rgba(255,255,255,.13);border-radius:50%;right:5%;top:-210px;box-shadow:0 0 0 35px rgba(255,255,255,.035),0 0 0 75px rgba(255,255,255,.025);pointer-events:none}
+header h1{position:relative;z-index:1;font-size:clamp(22px,3vw,30px);letter-spacing:.035em;line-height:1.25;margin:0 0 9px;font-weight:800}
+header p{position:relative;z-index:1;margin:0;color:#d9e8f2;font-size:14px;max-width:760px}
+.wrap{max-width:1400px;margin:28px auto;padding:0 22px}
+.tabs{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 18px;padding:7px;background:#e5edf4;border:1px solid #d8e2eb;border-radius:13px;width:fit-content;max-width:100%}
+.tab{border:1px solid transparent;border-radius:9px;background:transparent;padding:11px 18px;font-weight:700;color:#486581;cursor:pointer;transition:background .18s ease,color .18s ease,box-shadow .18s ease;font:inherit;font-weight:700}
+.tab:hover{background:#fff;color:var(--navy)}.tab.active{background:#fff;color:var(--navy);border-color:#dce6ee;box-shadow:0 3px 9px rgba(16,42,67,.09)}
+.sheet{display:none;background:var(--surface);border:1px solid #e0e7ef;border-radius:16px;padding:clamp(16px,2.5vw,30px);box-shadow:var(--shadow);overflow:auto;animation:fadeIn .2s ease}
+.sheet.active{display:block}@keyframes fadeIn{from{opacity:.65;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+.sheet-title{background:linear-gradient(110deg,var(--navy),var(--navy-2));color:white;padding:17px 20px;border-radius:11px;font-weight:800;font-size:clamp(17px,2vw,21px);line-height:1.35;margin:0 0 16px;box-shadow:0 5px 12px rgba(16,42,67,.12)}
+.subtitle{font-size:13px;color:var(--muted);line-height:1.7;margin:0 0 20px}
+.section{background:#edf5f8;color:var(--navy);font-weight:800;padding:12px 15px;margin:24px 0 10px;border-radius:8px;border-left:4px solid var(--teal);letter-spacing:.01em}
+table{width:100%;border-collapse:separate;border-spacing:0;margin:10px 0 22px;min-width:650px;overflow:hidden;border:1px solid var(--border);border-radius:9px}
+th,td{border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:11px 12px;text-align:left;vertical-align:middle}
+th:last-child,td:last-child{border-right:0}tbody tr:last-child td,tfoot tr:last-child td{border-bottom:0}
+th{background:var(--navy-2);color:#fff;font-weight:700;font-size:12px;letter-spacing:.015em}
+tbody tr:nth-child(even) td{background:#f8fafc}tbody tr:hover td{background:#f1f7fa}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}td.total{background:var(--green)!important;color:#174c35;font-weight:800}
+input,select{width:100%;border:1px solid #e2c96c;background:var(--yellow);color:#173f70;padding:10px 11px;border-radius:7px;font:inherit;min-width:65px;transition:border .15s,box-shadow .15s}
+input:focus,select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(8,127,140,.14)}input.number{text-align:right;font-variant-numeric:tabular-nums}input.calculated{background:#f8fafc;color:#111;border-color:var(--border)}
+.small{font-size:12px;color:var(--muted)}.status{display:inline-flex;align-items:center;gap:6px;padding:8px 13px;border-radius:999px;font-weight:800;background:#fee4e2;color:#9f1d17;font-size:12px;letter-spacing:.03em}.status.valid{background:#dcfce7;color:#166534}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:20px 0}
+.kpi{border:1px solid #dce6ee;border-radius:12px;padding:18px;background:linear-gradient(145deg,#fff,#f7fafc);box-shadow:0 4px 12px rgba(16,42,67,.04)}.kpi span{display:block;color:var(--muted);font-size:12px;font-weight:700;margin-bottom:8px}.kpi strong{font-size:clamp(18px,2vw,23px);color:var(--navy);font-weight:800;overflow-wrap:anywhere}
+.toolbar{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+.download-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 20px;padding:13px 15px;background:#f5fafb;border:1px solid #dcebed;border-radius:10px}.download-bar span{font-size:12px;color:var(--muted)}
+.download-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:8px;background:var(--teal);color:#fff;padding:11px 16px;font-weight:800;font-size:13px;cursor:pointer;box-shadow:0 3px 8px rgba(8,127,140,.16);transition:transform .15s,background .15s,box-shadow .15s}.download-btn:hover{background:var(--teal-dark);transform:translateY(-1px);box-shadow:0 5px 12px rgba(8,127,140,.2)}.download-btn:focus-visible,.tab:focus-visible{outline:3px solid #70c8d0;outline-offset:2px}
+.note{background:#f2f8fb;border-left:4px solid var(--teal);padding:14px 16px;line-height:1.7;border-radius:7px;margin:14px 0;color:#334e68}
+.guide{line-height:1.8}.guide h3{background:#edf5f8;color:var(--navy);padding:11px 14px;border-radius:8px;margin:24px 0 9px;border-left:4px solid var(--teal);font-size:15px}.guide p{margin:8px 2px;color:#334e68}
+.flow{display:block;max-width:100%;height:auto;margin:10px auto;border:1px solid #ddd}
+.row-actions{white-space:nowrap;text-align:center!important;width:76px}.row-btn{border:1px solid #cbd5e1;background:#fff;color:#334e68;border-radius:7px;padding:6px 9px;font:inherit;font-size:12px;font-weight:800;cursor:pointer}.row-btn.delete{color:#b42318;border-color:#f1b8b5}.row-btn:hover{background:#edf5f8}.add-row-wrap{display:flex;justify-content:flex-start;margin:-8px 0 22px}.add-row-btn{border:1px dashed var(--teal);background:#f0fbfc;color:var(--teal-dark);padding:10px 14px;border-radius:8px;font:inherit;font-size:13px;font-weight:800;cursor:pointer}.add-row-btn:hover{background:#dff5f6}.guide-card{border:1px solid #dce6ee;border-radius:10px;padding:14px 16px;margin:12px 0;background:#fbfdff}.guide-card strong{color:var(--navy)}.guide ol,.guide ul{padding-left:23px;color:#334e68}.guide li{margin:7px 0}.guide .tip{background:#fff8dc;border-left:4px solid #d6a900;padding:12px 14px;border-radius:7px;margin:12px 0;color:#5d4b00}
+footer{text-align:center;color:#829ab1;padding:22px 16px 28px;font-size:12px}
+@media(max-width:700px){header{padding:25px 18px}.wrap{padding:0 10px;margin:16px auto}.sheet{padding:13px;border-radius:12px}.sheet-title{padding:14px;font-size:16px}.tab{flex:1;padding:10px 12px;font-size:13px}.tabs{width:100%;gap:4px}.download-bar{align-items:flex-start}.download-btn{width:100%}table{font-size:12px}}
+@media print{body{background:#fff;color:#111;font-size:10pt}.download-bar,.toolbar,.tabs,header,footer,.add-row-wrap,.row-actions{display:none!important}#bbbTable th:last-child,#tklTable th:last-child,#bopTable th:last-child{display:none!important}.empty-row{display:none!important}.wrap{max-width:none;margin:0;padding:0}.sheet{display:none!important;border:0;box-shadow:none;padding:0;animation:none}.sheet.print-target{display:block!important}.sheet-title{print-color-adjust:exact;-webkit-print-color-adjust:exact;background:#183f5d!important}table{min-width:0;font-size:9pt;break-inside:auto}tr{break-inside:avoid;break-after:auto}th{print-color-adjust:exact;-webkit-print-color-adjust:exact;background:#183f5d!important}td.total{print-color-adjust:exact;-webkit-print-color-adjust:exact}input,select{border:0;background:#fff;color:#111;padding:2px;appearance:none} .section,.guide h3{print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<header><h1>SISTEM PERHITUNGAN HARGA POKOK PRODUKSI</h1><p>Full Costing dan Variable Costing — data input dan laporan terhubung otomatis</p></header>
+<div class="wrap">
+<nav class="tabs" aria-label="Lembar kerja">
+<button class="tab active" data-tab="Petunjuk">Petunjuk</button>
+<button class="tab" data-tab="Input">Input</button>
+<button class="tab" data-tab="Perhitungan">Perhitungan</button>
+<button class="tab" data-tab="Laporan_HPP">Laporan HPP</button>
+</nav>
+<section class="sheet active" id="Petunjuk">
+<h2 class="sheet-title">PANDUAN SINGKAT PENGGUNAAN SISTEM PERHITUNGAN HPP</h2>
+<div class="guide">
+<div class="guide-card"><strong>Mulai di sini:</strong> buka menu <b>Input</b>, isi identitas produksi, lalu masukkan biaya yang benar-benar digunakan. Bagian <b>Perhitungan</b> dan <b>Laporan HPP</b> akan diperbarui otomatis—Anda tidak perlu menghitung total secara manual.</div>
+<h3>1. Mengenal menu</h3>
+<ul>
+<li><b>Petunjuk:</b> panduan penggunaan sistem.</li>
+<li><b>Input:</b> tempat memasukkan identitas perusahaan, jumlah produksi, bahan baku langsung, tenaga kerja langsung, dan biaya overhead pabrik.</li>
+<li><b>Perhitungan:</b> menampilkan subtotal, total biaya, biaya per unit, serta pemeriksaan kelengkapan data. Jangan mengubah bagian ini secara manual.</li>
+<li><b>Laporan HPP:</b> menampilkan hasil metode Full Costing, Variable Costing, HPP per unit, dan perbandingan kedua metode.</li>
+</ul>
+<h3>2. Cara mengisi data</h3>
+<ol>
+<li>Pilih menu <b>Input</b>.</li>
+<li>Pada bagian <b>A. Identitas</b>, isi nama perusahaan, nama produk, periode, jumlah unit yang diproduksi, dan satuan produk. Jumlah unit harus lebih besar dari nol.</li>
+<li>Pada bagian <b>B. Bahan Baku Langsung</b>, isi nama bahan, satuan, kuantitas yang digunakan, dan harga per satuan. Sistem menghitung jumlah biaya dengan rumus <b>kuantitas × harga satuan</b>.</li>
+<li>Pada bagian <b>C. Tenaga Kerja Langsung</b>, isi kelompok/jenis pekerjaan, satuan waktu, jumlah jam kerja, dan tarif upah per jam. Sistem menghitung biaya dengan rumus <b>jam kerja × tarif upah per jam</b>.</li>
+<li>Pada bagian <b>D. Biaya Overhead Pabrik (BOP)</b>, isi nama biaya, pilih klasifikasi <b>Tetap</b> atau <b>Variabel</b>, lalu masukkan jumlah biayanya.</li>
+<li>Periksa kembali nama, kuantitas, tarif, jumlah unit, dan klasifikasi BOP sebelum menggunakan hasil laporan.</li>
+</ol>
+<h3>3. Menambah atau menghapus baris input</h3>
+<p>Setiap tabel biaya dimulai dengan satu baris kosong agar tampilan tetap ringkas. Jika memiliki lebih dari satu komponen biaya, gunakan tombol tambah di bawah tabel terkait:</p>
+<ul>
+<li><b>+ Tambah Bahan Baku</b> untuk menambahkan jenis bahan baku.</li>
+<li><b>+ Tambah Tenaga Kerja</b> untuk menambahkan kelompok tenaga kerja.</li>
+<li><b>+ Tambah Biaya Overhead</b> untuk menambahkan jenis biaya overhead.</li>
+</ul>
+<p>Untuk menghapus baris yang tidak diperlukan, klik tombol <b>Hapus</b> pada baris tersebut. Minimal satu baris input akan tetap tersedia pada setiap tabel. Setelah baris ditambah atau dihapus, nomor baris, subtotal, perhitungan, dan laporan akan diperbarui otomatis.</p>
+<div class="tip"><b>Tips:</b> masukkan hanya komponen biaya yang relevan dengan produksi Anda. Tidak perlu menambahkan baris untuk biaya yang tidak ada. Baris kosong tidak menambah biaya ke total.</div>
+<h3>4. Memahami warna kolom</h3>
+<ul>
+<li><b>Kolom kuning dengan teks biru:</b> data yang boleh diisi atau diubah pengguna.</li>
+<li><b>Kolom putih/abu-abu:</b> hasil perhitungan otomatis; jangan diubah secara manual.</li>
+<li><b>Kolom atau baris hijau:</b> total biaya yang dihitung otomatis.</li>
+</ul>
+<h3>5. Membaca hasil dan status data</h3>
+<ol>
+<li>Buka menu <b>Perhitungan</b> untuk memeriksa total biaya bahan baku, tenaga kerja, BOP variabel, BOP tetap, dan hasil pemeriksaan.</li>
+<li>Buka menu <b>Laporan HPP</b> untuk melihat total HPP dan HPP per unit berdasarkan kedua metode.</li>
+<li>Status hijau <b>DATA VALID</b> berarti pemeriksaan dasar sistem terpenuhi. Status merah <b>PERIKSA DATA</b> berarti ada data yang perlu diperiksa pada menu Perhitungan.</li>
+</ol>
+<p><b>Arti pesan yang mungkin muncul:</b></p>
+<ul>
+<li><b>ISI JUMLAH UNIT:</b> jumlah unit produksi belum diisi atau masih nol.</li>
+<li><b>ADA BOP BELUM DIKLASIFIKASI:</b> ada biaya overhead yang memiliki nilai, tetapi belum dipilih sebagai Tetap atau Variabel.</li>
+<li><b>BELUM ADA DATA BIAYA:</b> total biaya produksi masih nol; periksa kembali input biaya.</li>
+</ul>
+<h3>6. Perbedaan metode HPP</h3>
+<p><b>Full Costing</b> memasukkan bahan baku langsung, tenaga kerja langsung, BOP variabel, dan BOP tetap ke biaya produksi.</p>
+<p><b>Variable Costing</b> memasukkan bahan baku langsung, tenaga kerja langsung, dan BOP variabel. BOP tetap diperlakukan sebagai biaya periode, bukan sebagai biaya produk.</p>
+<p><b>HPP per unit</b> dihitung dengan membagi total HPP sesuai metode dengan jumlah unit yang diproduksi.</p>
+<h3>7. Menyimpan hasil dalam PDF</h3>
+<ol>
+<li>Buka bagian yang ingin disimpan: <b>Input</b>, <b>Perhitungan</b>, atau <b>Laporan HPP</b>.</li>
+<li>Klik tombol <b>Download ... (PDF)</b> pada bagian tersebut.</li>
+<li>Ketika jendela cetak browser terbuka, pilih printer/destinasi <b>Save as PDF</b> atau <b>Simpan sebagai PDF</b>.</li>
+<li>Klik <b>Save/Simpan</b>, pilih folder penyimpanan, lalu beri nama file.</li>
+</ol>
+<div class="tip"><b>Catatan:</b> tombol PDF membuka jendela cetak browser. File baru tersimpan setelah Anda memilih <b>Save as PDF</b> dan menekan <b>Simpan</b>.</div>
+<h3>8. Asumsi dan catatan</h3>
+<p>Sistem ini menggunakan asumsi satu perusahaan manufaktur dengan satu jenis produk dan seluruh produk selesai diproduksi pada periode berjalan, tanpa persediaan produk dalam proses awal maupun akhir. Hasil sangat bergantung pada ketepatan data yang dimasukkan. Status valid merupakan pemeriksaan dasar sistem, bukan pengganti pemeriksaan akuntansi secara menyeluruh.</p>
+<p>Nama perusahaan dan produk yang tampil sebagai contoh dapat diganti dengan data Anda. Gunakan data simulasi untuk latihan, atau data aktual yang sudah diperiksa untuk kebutuhan laporan.</p>
+</div></section>
+<section class="sheet" id="Input">
+<h2 class="sheet-title">SISTEM PERHITUNGAN HARGA POKOK PRODUKSI – INPUT DATA</h2>
+<div class="download-bar"><button class="download-btn" onclick="downloadPDF('input')">⬇ Download Data Input (PDF)</button><span>Unduh data input dalam format PDF.</span></div>
+<p class="subtitle">Isi kolom berwarna kuning sesuai data Anda. Semua kolom identitas sengaja dikosongkan saat aplikasi pertama kali dibuka. Kolom jumlah dan total biaya dihitung otomatis.</p>
+
+<div class="section">A. IDENTITAS PERUSAHAAN, PERIODE, DAN JUMLAH PRODUKSI</div>
+<table><tbody>
+<tr><td>Nama Perusahaan</td><td><input id="company" value="" placeholder="Masukkan nama perusahaan"></td></tr>
+<tr><td>Nama Produk</td><td><input id="productName" value="" placeholder="Masukkan nama produk"></td></tr>
+<tr><td>Periode</td><td><input id="period" value="" placeholder="Contoh: Oktober 2026"></td></tr>
+<tr><td>Jumlah Unit Produksi</td><td><input id="units" class="number" type="number" min="0" step="any" value="" placeholder="Masukkan jumlah unit"></td></tr>
+<tr><td>Satuan Produk</td><td><input id="unitLabel" value="" placeholder="Contoh: buah, unit, pcs"></td></tr>
+</tbody></table>
+<div class="section">B. BIAYA BAHAN BAKU LANGSUNG (BBB)</div>
+<table id="bbbTable"><thead><tr><th>No</th><th>Jenis Bahan Baku</th><th>Satuan</th><th class="num">Kuantitas</th><th class="num">Harga Satuan (Rp)</th><th class="num">Jumlah (Rp)</th><th>Aksi</th></tr></thead><tbody></tbody><tfoot><tr><td colspan="6" class="total">TOTAL BIAYA BAHAN BAKU LANGSUNG</td><td id="bbbTotal" class="num total">0</td></tr></tfoot></table><div class="add-row-wrap"><button type="button" class="add-row-btn" onclick="addRow('bbb')">＋ Tambah Bahan Baku</button></div>
+<div class="section">C. BIAYA TENAGA KERJA LANGSUNG (TKL)</div>
+<table id="tklTable"><thead><tr><th>No</th><th>Kelompok Tenaga Kerja</th><th>Satuan</th><th class="num">Jam Kerja</th><th class="num">Tarif Upah per Jam (Rp)</th><th class="num">Jumlah (Rp)</th><th>Aksi</th></tr></thead><tbody></tbody><tfoot><tr><td colspan="6" class="total">TOTAL BIAYA TENAGA KERJA LANGSUNG</td><td id="tklTotal" class="num total">0</td></tr></tfoot></table><div class="add-row-wrap"><button type="button" class="add-row-btn" onclick="addRow('tkl')">＋ Tambah Tenaga Kerja</button></div>
+<div class="section">D. BIAYA OVERHEAD PABRIK (BOP) – pilih klasifikasi: Tetap atau Variabel</div>
+<table id="bopTable"><thead><tr><th>No</th><th>Jenis Biaya Overhead Pabrik</th><th>Klasifikasi</th><th class="num">Jumlah (Rp)</th><th>Aksi</th></tr></thead><tbody></tbody><tfoot><tr><td colspan="4" class="total">TOTAL BIAYA OVERHEAD PABRIK</td><td id="bopTotal" class="num total">0</td></tr></tfoot></table><div class="add-row-wrap"><button type="button" class="add-row-btn" onclick="addRow('bop')">＋ Tambah Biaya Overhead</button></div>
+<p class="small">Keterangan warna: sel kuning, teks biru = input (boleh diubah) · sel putih, teks hitam = rumus otomatis (jangan diubah) · sel hijau = total otomatis</p>
+</section>
+<section class="sheet" id="Perhitungan">
+<h2 class="sheet-title">PERHITUNGAN BIAYA PRODUKSI (OTOMATIS)</h2>
+<div class="download-bar"><button class="download-btn" onclick="downloadPDF('perhitungan')">⬇ Download Perhitungan (PDF)</button><span>Unduh rincian biaya dan pemeriksaan data dalam format PDF.</span></div><p class="subtitle">Sheet ini seluruhnya berisi rumus. Jangan diubah; ubah data di Input.</p>
+<table><thead><tr><th>Komponen Biaya</th><th class="num">Jumlah (Rp)</th><th class="num">Per Unit (Rp)</th><th class="num">% dari Full Costing</th></tr></thead><tbody id="calcBody"></tbody></table>
+<div class="section">PEMERIKSAAN DATA (validasi otomatis)</div>
+<table><tbody id="checksBody"></tbody></table>
+</section>
+<section class="sheet" id="Laporan_HPP">
+<h2 class="sheet-title">LAPORAN HARGA POKOK PRODUKSI</h2>
+<div class="download-bar"><button class="download-btn" onclick="downloadPDF('laporan')">⬇ Download Laporan HPP (PDF)</button><span>Unduh laporan Full Costing, Variable Costing, dan perbandingan dalam format PDF.</span></div>
+<h3 id="reportCompany"></h3><p id="reportMeta"></p><p>Status data: <span id="reportStatus" class="status">PERIKSA DATA</span></p>
+<div class="kpis"><div class="kpi"><span>Total HPP — Full Costing</span><strong id="kpiFull">Rp0</strong></div><div class="kpi"><span>HPP per Unit — Full Costing</span><strong id="kpiFullUnit">Rp0</strong></div><div class="kpi"><span>Total HPP — Variable Costing</span><strong id="kpiVar">Rp0</strong></div><div class="kpi"><span>HPP per Unit — Variable Costing</span><strong id="kpiVarUnit">Rp0</strong></div></div>
+<div class="section">I. FULL COSTING (ABSORPTION COSTING)</div>
+<table><tbody id="fullReport"></tbody></table>
+<div class="section">II. VARIABLE COSTING (DIRECT COSTING)</div>
+<table><tbody id="varReport"></tbody></table>
+<div class="note">Catatan: BOP tetap tidak dibebankan ke produk pada Variable Costing, melainkan diperlakukan sebagai biaya periode.</div>
+<div class="section">III. PERBANDINGAN FULL COSTING DAN VARIABLE COSTING</div>
+<table><thead><tr><th>Komponen</th><th class="num">Full Costing (Rp)</th><th class="num">Variable Costing (Rp)</th><th class="num">Selisih (Rp)</th></tr></thead><tbody id="comparisonBody"></tbody></table>
+<p id="reportCheck1" class="small"></p><p id="reportCheck2" class="small"></p>
+</section>
+</div>
+<footer>Sistem Perhitungan HPP · Tampilan HTML interaktif berdasarkan workbook yang diberikan</footer>
+<script>
+const initialBBB=[["","", "", ""]];
+const initialTKL=[["","", "", ""]];
+const initialBOP=[["","", ""]];
+const money=n=>new Intl.NumberFormat('id-ID',{maximumFractionDigits:0}).format(Number(n)||0);
+const num=v=>{let x=Number(v);return Number.isFinite(x)?x:0};
+function inp(value,cls='',type='text',attrs=''){return `<input value="${String(value??'').replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;')}" class="${cls}" type="${type}" ${attrs}>`}
+function buildInputTable(id,rows,kind){
+ const body=document.querySelector(`#${id} tbody`);
+ body.innerHTML=rows.map((r,i)=>makeRow(r,i,kind)).join('');
+}
+function makeRow(r,i,kind){
+ const action=`<td class="row-actions"><button type="button" class="row-btn delete" onclick="removeRow(this,'${kind}')" aria-label="Hapus baris ${i+1}">Hapus</button></td>`;
+ if(kind==='bbb'||kind==='tkl') return `<tr><td>${i+1}</td><td>${inp(r[0])}</td><td>${inp(r[1])}</td><td>${inp(r[2],'number','number','step="any" min="0"')}</td><td>${inp(r[3],'number','number','step="any" min="0"')}</td><td class="num calculated row-amount">0</td>${action}</tr>`;
+ return `<tr><td>${i+1}</td><td>${inp(r[0])}</td><td><select><option value="" ${!r[1]?'selected':''}>Pilih klasifikasi</option><option ${r[1]==='Tetap'?'selected':''}>Tetap</option><option ${r[1]==='Variabel'?'selected':''}>Variabel</option></select></td><td>${inp(r[2],'number','number','step="any" min="0"')}</td>${action}</tr>`;
+}
+function addRow(kind){
+ const ids={bbb:'bbbTable',tkl:'tklTable',bop:'bopTable'};
+ const table=document.getElementById(ids[kind]);
+ const blank=kind==='bop'?['','','']:['','','',''];
+ table.querySelector('tbody').insertAdjacentHTML('beforeend',makeRow(blank,table.querySelectorAll('tbody tr').length,kind));
+ renumberRows(kind);update();
+}
+function removeRow(button,kind){
+ const ids={bbb:'bbbTable',tkl:'tklTable',bop:'bopTable'};
+ const tbody=document.querySelector(`#${ids[kind]} tbody`);
+ if(tbody.querySelectorAll('tr').length<=1){alert('Minimal satu baris input harus tersedia. Jika tidak digunakan, biarkan baris ini kosong.');return;}
+ button.closest('tr').remove();renumberRows(kind);update();
+}
+function renumberRows(kind){
+ const ids={bbb:'bbbTable',tkl:'tklTable',bop:'bopTable'};
+ [...document.querySelectorAll(`#${ids[kind]} tbody tr`)].forEach((tr,i)=>{
+  tr.cells[0].textContent=i+1;
+  const button=tr.querySelector('.row-btn');if(button)button.setAttribute('aria-label',`Hapus baris ${i+1}`);
+ });
+}
+buildInputTable('bbbTable',initialBBB,'bbb');buildInputTable('tklTable',initialTKL,'tkl');buildInputTable('bopTable',initialBOP,'bop');
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.sheet').forEach(s=>s.classList.toggle('active',s.id===b.dataset.tab));}));
+function getRows(id){return [...document.querySelectorAll(`#${id} tbody tr`)]}
+function readCostRows(id){return getRows(id).map(tr=>[...tr.querySelectorAll('input')].map(x=>x.value))}
+function update(){
+ ['bbbTable','tklTable','bopTable'].forEach(id=>getRows(id).forEach(tr=>{const inputs=[...tr.querySelectorAll('input')];const sel=tr.querySelector('select');const empty=inputs.every(x=>x.value.trim()==='')&&(!sel||!sel.value);tr.classList.toggle('empty-row',empty)}));
+ let bbb=0,tkl=0,bopVar=0,bopFixed=0,bopTotal=0;
+ getRows('bbbTable').forEach(tr=>{let ins=tr.querySelectorAll('input'),q=num(ins[2].value),p=num(ins[3].value),v=q*p;bbb+=v;tr.querySelector('.row-amount').textContent=money(v)});
+ getRows('tklTable').forEach(tr=>{let ins=tr.querySelectorAll('input'),h=num(ins[2].value),p=num(ins[3].value),v=h*p;tkl+=v;tr.querySelector('.row-amount').textContent=money(v)});
+ getRows('bopTable').forEach(tr=>{let ins=tr.querySelectorAll('input'),sel=tr.querySelector('select'),v=num(ins[1].value);bopTotal+=v;if(sel.value==='Variabel')bopVar+=v;else if(sel.value==='Tetap')bopFixed+=v});
+ document.getElementById('bbbTotal').textContent=money(bbb);document.getElementById('tklTotal').textContent=money(tkl);document.getElementById('bopTotal').textContent=money(bopTotal);
+ const units=num(document.getElementById('units').value), full=bbb+tkl+bopVar+bopFixed, variable=bbb+tkl+bopVar, diff=full-variable;
+ const data=[
+ ["Bahan baku langsung",bbb],["Tenaga kerja langsung",tkl],["BOP variabel",bopVar],["BOP tetap",bopFixed],
+ ["Total biaya produksi – Full Costing",full],["Total biaya produksi – Variable Costing",variable],["Selisih Full – Variable Costing (= BOP tetap)",diff]
+ ];
+ document.getElementById('calcBody').innerHTML=data.map((x,i)=>`<tr><td class="${i>=4?'total':''}">${x[0]}</td><td class="num ${i>=4?'total':''}">${money(x[1])}</td><td class="num ${i>=4?'total':''}">${money(units>0?x[1]/units:0)}</td><td class="num ${i>=4?'total':''}">${full>0?(x[1]/full*100).toLocaleString('id-ID',{maximumFractionDigits:2})+'%':'0%'}</td></tr>`).join('');
+ let hasUnclassified=false;getRows('bopTable').forEach(tr=>{const sel=tr.querySelector('select'),amount=num(tr.querySelector('input').value);if(amount!==0&&!sel.value)hasUnclassified=true});
+ const checks=[
+ ["Jumlah unit produksi lebih dari 0",units>0?"OK":"ISI JUMLAH UNIT"],
+ ["Seluruh BOP sudah diklasifikasi (Tetap/Variabel)",hasUnclassified?"ADA BOP BELUM DIKLASIFIKASI":"OK"],
+ ["Selisih Full – Variable sama dengan BOP tetap",Math.abs(diff-bopFixed)<0.005?"OK":"CEK RUMUS"],
+ ["Data biaya sudah terisi",full>0?"OK":"BELUM ADA DATA BIAYA"]
+ ];
+ const valid=checks.every(x=>x[1]==="OK");
+ document.getElementById('checksBody').innerHTML=checks.map(x=>`<tr><td>${x[0]}</td><td><b style="color:${x[1]==='OK'?'#23733b':'#b42318'}">${x[1]}</b></td></tr>`).join('')+`<tr><td class="total">STATUS KESELURUHAN</td><td class="total"><b style="color:${valid?'#23733b':'#b42318'}">${valid?'DATA VALID':'PERIKSA DATA'}</b></td></tr>`;
+ const companyName=document.getElementById('company').value.trim();
+ const productName=document.getElementById('productName').value.trim();
+ const periodName=document.getElementById('period').value.trim();
+ const unitName=document.getElementById('unitLabel').value.trim();
+ document.getElementById('reportCompany').textContent=companyName;
+ document.getElementById('reportMeta').textContent=[productName?`Produk: ${productName}`:'',periodName?`Periode: ${periodName}`:'',unitName?`Satuan produk: ${unitName}`:''].filter(Boolean).join('   |   ');
+ const status=document.getElementById('reportStatus');status.textContent=valid?'DATA VALID':'PERIKSA DATA';status.className='status'+(valid?' valid':'');
+ document.getElementById('kpiFull').textContent='Rp'+money(full);document.getElementById('kpiFullUnit').textContent='Rp'+money(units>0?full/units:0);
+ document.getElementById('kpiVar').textContent='Rp'+money(variable);document.getElementById('kpiVarUnit').textContent='Rp'+money(units>0?variable/units:0);
+ const fullRows=[["Bahan baku langsung",bbb],["Tenaga kerja langsung",tkl],["Biaya overhead pabrik variabel",bopVar],["Biaya overhead pabrik tetap",bopFixed],["Total Harga Pokok Produksi – Full Costing (Rp)",full],["Jumlah unit diproduksi",units],["Harga Pokok Produksi per Unit – Full Costing (Rp)",units>0?full/units:0]];
+ document.getElementById('fullReport').innerHTML=fullRows.map((x,i)=>`<tr><td class="${i===4||i===6?'total':''}">${x[0]}</td><td class="num ${i===4||i===6?'total':''}">${money(x[1])}</td></tr>`).join('');
+ const varRows=[["Bahan baku langsung",bbb],["Tenaga kerja langsung",tkl],["Biaya overhead pabrik variabel",bopVar],["Total Harga Pokok Produksi – Variable Costing (Rp)",variable],["Jumlah unit diproduksi",units],["Harga Pokok Produksi per Unit – Variable Costing (Rp)",units>0?variable/units:0]];
+ document.getElementById('varReport').innerHTML=varRows.map((x,i)=>`<tr><td class="${i===3||i===5?'total':''}">${x[0]}</td><td class="num ${i===3||i===5?'total':''}">${money(x[1])}</td></tr>`).join('');
+ const comp=[["Bahan baku langsung",bbb,bbb],["Tenaga kerja langsung",tkl,tkl],["BOP variabel",bopVar,bopVar],["BOP tetap",bopFixed,0]];
+ comp.push(["Total HPP",full,variable],["Jumlah unit diproduksi",units,units],["HPP per unit (Rp)",units>0?full/units:0,units>0?variable/units:0]);
+ document.getElementById('comparisonBody').innerHTML=comp.map((x,i)=>`<tr><td class="${i>=4?'total':''}">${x[0]}</td><td class="num ${i>=4?'total':''}">${money(x[1])}</td><td class="num ${i>=4?'total':''}">${money(x[2])}</td><td class="num ${i>=4?'total':''}">${money(x[1]-x[2])}</td></tr>`).join('');
+ document.getElementById('reportCheck1').textContent='Pemeriksaan: selisih total HPP = BOP tetap — '+(Math.abs((full-variable)-bopFixed)<0.005?'OK':'CEK');
+ document.getElementById('reportCheck2').textContent='Pemeriksaan: total Full Costing = Perhitungan — '+(Math.abs(full-(bbb+tkl+bopVar+bopFixed))<0.005&&Math.abs(variable-(bbb+tkl+bopVar))<0.005?'OK':'CEK');
+}
+document.addEventListener('input',e=>{if(e.target.matches('input,select'))update()});
+document.addEventListener('change',e=>{if(e.target.matches('input,select'))update()});
+update();
+
+function downloadPDF(kind){
+  const sectionMap={input:'Input',perhitungan:'Perhitungan',laporan:'Laporan_HPP'};
+  const target=document.getElementById(sectionMap[kind]);
+  if(!target)return;
+  document.querySelectorAll('.sheet').forEach(s=>s.classList.remove('print-target'));
+  target.classList.add('print-target');
+  const oldTitle=document.title;
+  const nameMap={input:'Data-Input-HPP',perhitungan:'Perhitungan-HPP',laporan:'Laporan-HPP'};
+  document.title=nameMap[kind]+'-'+(document.getElementById('company')?.value||'Isnan').replace(/[^a-z0-9_-]/gi,'_');
+  window.print();
+  setTimeout(()=>{document.title=oldTitle;target.classList.remove('print-target')},800);
+}
+
+</script>
+</body></html>
